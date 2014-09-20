@@ -6,17 +6,22 @@ class Game
 
   attr_reader :ai_symbol, :player_symbol, :empty_positions, :current_turn
 
-  def initialize(ai_symbol='O', player_symbol='X')
+  def initialize
     @board = Array.new(9)
     @empty_positions = (0..8).to_a
-    @ai_symbol, @player_symbol = ai_symbol, player_symbol
+    @ai_symbol, @player_symbol = 'O', 'X'
     @current_turn = player_symbol
     @winner = nil
   end
 
-  def make_move(position, symbol) 
-    @board[position] = symbol
+  def make_move(position) 
+    @board[position] = @current_turn
     @empty_positions.delete(position)
+    @current_turn = new_turn
+  end
+
+  def new_turn
+    @current_turn == @ai_symbol ? @player_symbol : @ai_symbol
   end
 
   def empty?
