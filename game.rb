@@ -28,8 +28,24 @@ class Game
     empty_positions.size == 9
   end
 
+  def number_of_moves
+    @board.size - @empty_positions.size
+  end
+
   def winner?
     !!@winner
+  end
+
+  def random_corner
+    [0,2,6,8].sample
+  end
+
+  def center
+    4
+  end
+
+  def center_taken?
+    !!@board[4]
   end
 
   def check_for_winner
