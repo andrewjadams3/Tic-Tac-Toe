@@ -4,18 +4,23 @@ class Game
             [1,4,7], [2,5,8], 
             [0,4,8], [2,4,6]]
 
-  def initialize(ai_symbol, player_symbol)
+  attr_reader :ai_symbol, :player_symbol, :empty_positions, :current_turn
+
+  def initialize(ai_symbol='O', player_symbol='X')
     @board = Array.new(9)
+    @empty_positions = (0..8).to_a
     @ai_symbol, @player_symbol = ai_symbol, player_symbol
+    @current_turn = player_symbol
     @winner = nil
   end
 
-  def ai_move(position)
-    @board[position-1] = @ai_symbol
+  def make_move(position, symbol) 
+    @board[position] = symbol
+    @empty_positions.delete(position)
   end
 
-  def player_move(position)
-    @board[position-1] = @player_symbol
+  def empty?
+    empty_positions.size == 9
   end
 
   def winner?
@@ -33,10 +38,3 @@ class Game
     values.uniq.size == 1 && values[0] != nil
   end
 end
-
-game = Game.new('X', 'O')
-game.player_move(1)
-game.ai_move(2)
-game.player_move(3)
-game.check_for_winner
-puts game.winner?
