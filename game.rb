@@ -8,7 +8,7 @@ class Game
 
   attr_reader :ai_symbol, :player_symbol, 
               :empty_positions, :current_turn,
-              :winner
+              :winner, :board
 
   def initialize
     @board = Array.new(9)
@@ -34,7 +34,7 @@ class Game
   end
 
   def over?
-    empty_positions.size == 0
+    !!@winner || empty_positions.size == 0
   end
 
   def number_of_moves
@@ -62,5 +62,22 @@ class Game
   def winning_line?(line)
     values = line.map { |position| @board[position] }
     values.uniq.size == 1 && values[0] != nil
+  end
+
+  def to_s
+    @board.each_slice(3) do |row|
+      p row
+    end
+    ""
+  end
+
+  def initialize_copy(source)
+    empty_positions = @empty_positions.map{ |x| x }
+    board = @board.map { |x| x }
+    current_turn = @current_turn
+    super
+    @current_turn = current_turn
+    @empty_positions = empty_positions
+    @board = board
   end
 end
