@@ -1,10 +1,14 @@
+require_relative 'ai'
+
 class Game
   LINES  = [[0,1,2], [3,4,5], 
             [6,7,8], [0,3,6], 
             [1,4,7], [2,5,8], 
             [0,4,8], [2,4,6]]
 
-  attr_reader :ai_symbol, :player_symbol, :empty_positions, :current_turn
+  attr_reader :ai_symbol, :player_symbol, 
+              :empty_positions, :current_turn,
+              :winner
 
   def initialize
     @board = Array.new(9)
@@ -18,6 +22,7 @@ class Game
     @board[position] = @current_turn
     @empty_positions.delete(position)
     @current_turn = new_turn
+    check_for_winner
   end
 
   def new_turn
@@ -28,12 +33,12 @@ class Game
     empty_positions.size == 9
   end
 
-  def number_of_moves
-    @board.size - @empty_positions.size
+  def over?
+    empty_positions.size == 0
   end
 
-  def winner?
-    !!@winner
+  def number_of_moves
+    @board.size - @empty_positions.size
   end
 
   def random_corner

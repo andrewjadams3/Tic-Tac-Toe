@@ -20,7 +20,7 @@ describe Game do
     end
 
     it 'should not have a winner' do
-      expect(game.winner?).to be false
+      expect(game.winner).to be nil
     end
 
   end
