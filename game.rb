@@ -1,5 +1,3 @@
-require_relative 'ai'
-
 class Game
   LINES  = [[0,1,2], [3,4,5], 
             [6,7,8], [0,3,6], 
@@ -14,7 +12,7 @@ class Game
     @board = Array.new(9)
     @empty_positions = (0..8).to_a
     @ai_symbol, @player_symbol = 'O', 'X'
-    @current_turn = player_symbol
+    @current_turn = @player_symbol
     @winner = nil
   end
 
@@ -34,7 +32,7 @@ class Game
   end
 
   def over?
-    !!@winner || empty_positions.size == 0
+    !!@winner || empty_positions.empty?
   end
 
   def number_of_moves
@@ -50,7 +48,7 @@ class Game
   end
 
   def center_taken?
-    !!@board[4]
+    !!@board[center]
   end
 
   def check_for_winner
