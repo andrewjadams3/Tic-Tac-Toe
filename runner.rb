@@ -1,18 +1,29 @@
+require 'dispel'
 require_relative 'ai'
 require_relative 'game'
+require_relative 'view'
 
-game = Game.new
-ai = Ai.new
+Dispel::Screen.open do |screen|
+  game = Game.new
+  ai = Ai.new
+  view = View.new(game)
 
-puts "Welcome to tic-tac-toe!"
-puts "Make the first move"
-puts game
-until game.over?
-  move = gets.chomp
-  game.make_move(move.to_i)
-  ai.make_move(game)
-  puts game
+  screen.draw(view.draw_screen)
+
+  Dispel::Keyboard.output do |key|
+    case key
+    when :up then view.move(0,-1)
+    when :down then view.move(0,1)
+    when :right then view.move(1,0)
+    when :left then view.move(-1,0)
+    when :enter
+      view.set
+      ai.make_move(game)
+    when "q" then break
+    when "r"
+      game = Game.new
+      view = View.new(game)
+    end
+    screen.draw(view.draw_screen)
+  end
 end
-
-puts "Game over!"
-game.winner ? (puts "\"#{game.winner}\" wins!") : (puts "It's a draw!")
