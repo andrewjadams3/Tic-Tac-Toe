@@ -1,12 +1,16 @@
 class Ai
-
-  def make_move(game)
-    return if game.over?
+  def initialize(game)
     @game = game
     @ai_symbol = game.ai_symbol
     @player_symbol = game.player_symbol
+  end
+
+  def make_move
+    return if @game.over?
     @game.make_move(best_move)
   end
+
+  private
 
   def best_move
     return @game.random_corner if @game.empty?
@@ -21,7 +25,7 @@ class Ai
   def predict_move(game)
     return score(game) if game.over?
     moves = Hash.new
-    
+
     game.empty_positions.each do |position|
       test_game = game.dup
       test_game.make_move(position)

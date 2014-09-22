@@ -5,7 +5,7 @@ require_relative 'view'
 
 Dispel::Screen.open do |screen|
   game = Game.new
-  ai = Ai.new
+  ai = Ai.new(game)
   view = View.new(game)
 
   screen.draw(view.draw_screen)
@@ -18,11 +18,12 @@ Dispel::Screen.open do |screen|
     when :left then view.move(-1,0)
     when :enter
       view.set
-      ai.make_move(game)
+      ai.make_move
     when "q" then break
     when "r"
       game = Game.new
       view = View.new(game)
+      ai = Ai.new(game)
     end
     screen.draw(view.draw_screen)
   end
