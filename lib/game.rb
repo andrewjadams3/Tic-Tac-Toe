@@ -30,7 +30,7 @@ class Game
   end
 
   def over?
-    @winner || empty_positions.empty?
+    !!@winner || empty_positions.empty?
   end
 
   def number_of_moves
