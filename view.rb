@@ -34,15 +34,6 @@ BOARD
     [draw_board, status_line, position_line, instructions].join("\n")
   end
 
-  def draw_board
-    index = -1
-    @board.gsub(" X ") do
-      index += 1
-      field = @game.board[index] ? @game.board[index] : " "
-      @position == index ? "(#{field})" : " #{field} "
-    end
-  end
-
   def move(x,y)
     x = (@position + x) % 3
     y = ((@position / 3) + y) % 3
@@ -52,6 +43,17 @@ BOARD
   def set
     @game.make_move(@position)
     @current_insult = INSULTS.sample
+  end
+
+  private
+
+  def draw_board
+    index = -1
+    @board.gsub(" X ") do
+      index += 1
+      field = @game.board[index] ? @game.board[index] : " "
+      @position == index ? "(#{field})" : " #{field} "
+    end
   end
 
   def instructions
