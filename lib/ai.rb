@@ -34,12 +34,12 @@ class Ai
 
     if game.current_turn == @ai_symbol
       max_score = moves.max_by{|position, score| score}
-      @best_choice = max_score[0]
-      return max_score[1]
+      @best_choice = max_score.first
+      return max_score.last
     else
       min_score = moves.min_by{|position, score| score}
-      @best_choice = min_score[0]
-      return min_score[1]
+      @best_choice = min_score.first
+      return min_score.last
     end
   end
 

@@ -30,7 +30,7 @@ class Game
   end
 
   def over?
-    !!@winner || empty_positions.empty?
+    @winner || empty_positions.empty?
   end
 
   def number_of_moves
@@ -63,12 +63,13 @@ class Game
 
   def winning_line?(line)
     values = line.map { |position| @board[position] }
-    values.uniq.size == 1 && values[0] != nil
+    values.uniq.size == 1 && !values.include?(nil)
   end
 
+  #Creates a deep copy when #dup is called on an instance of Game
   def initialize_copy(source)
-    empty_positions = @empty_positions.map{ |x| x }
-    board = @board.map { |x| x }
+    empty_positions = @empty_positions.dup
+    board = @board.dup
     current_turn = @current_turn
     super
     @current_turn = current_turn
