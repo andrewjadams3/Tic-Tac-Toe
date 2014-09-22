@@ -1,7 +1,7 @@
 require 'dispel'
-require_relative 'ai'
-require_relative 'game'
-require_relative 'view'
+require_relative 'lib/ai'
+require_relative 'lib/game'
+require_relative 'lib/view'
 
 Dispel::Screen.open do |screen|
   game = Game.new
