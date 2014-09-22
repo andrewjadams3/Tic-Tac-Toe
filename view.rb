@@ -41,8 +41,13 @@ BOARD
   end
 
   def set
-    @game.make_move(@position)
-    @current_insult = INSULTS.sample
+    if @game.make_move(@position)
+      @current_insult = INSULTS.sample
+      true
+    else
+      @current_insult = "Are you kidding me? You can't play there!"
+      false
+    end
   end
 
   private

@@ -16,15 +16,13 @@ class Game
     @winner = nil
   end
 
-  def make_move(position) 
+  def make_move(position)
+    return false unless @empty_positions.include?(position) && !over?
     @board[position] = @current_turn
     @empty_positions.delete(position)
     @current_turn = new_turn
     check_for_winner
-  end
-
-  def new_turn
-    @current_turn == @ai_symbol ? @player_symbol : @ai_symbol
+    true
   end
 
   def empty?
@@ -51,6 +49,12 @@ class Game
     !!@board[center]
   end
 
+  private
+
+  def new_turn
+    @current_turn == @ai_symbol ? @player_symbol : @ai_symbol
+  end
+
   def check_for_winner
     LINES.each do |line|
       @winner = @board[line[0]] if winning_line?(line)
@@ -60,13 +64,6 @@ class Game
   def winning_line?(line)
     values = line.map { |position| @board[position] }
     values.uniq.size == 1 && values[0] != nil
-  end
-
-  def to_s
-    @board.each_slice(3) do |row|
-      p row
-    end
-    ""
   end
 
   def initialize_copy(source)

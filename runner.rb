@@ -16,9 +16,7 @@ Dispel::Screen.open do |screen|
     when :down then view.move(0,1)
     when :right then view.move(1,0)
     when :left then view.move(-1,0)
-    when :enter
-      view.set
-      ai.make_move
+    when :enter then ai.make_move if view.set
     when "q" then break
     when "r"
       game = Game.new
