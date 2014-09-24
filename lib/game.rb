@@ -37,6 +37,10 @@ class Game
     @current_turn == @ai_symbol
   end
 
+  def valid_position?(position)
+    @empty_positions.include?(position)
+  end
+
   def number_of_moves
     @board.size - @empty_positions.size
   end

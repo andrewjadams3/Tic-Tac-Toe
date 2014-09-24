@@ -35,11 +35,12 @@ BOARD
   def initialize(game)
     @game = game
     @position = 0
-    @current_insult = INSULTS.sample
+    @status = update_status
     @board = BOARD
   end
 
   def draw_screen
+    update_status
     [draw_board, @status, INSTRUCTIONS].join("\n")
   end
 
@@ -49,11 +50,31 @@ BOARD
     @position = x + (y * 3)
   end
 
+  def attempt_position
+    if @game.valid_position?(@position)
+      set_position
+      @current_insult = INSULTS.sample
+    else
+      @current_insult = STATUSES[:bad_move]
+    end
+  end
+
+  private
+
   def set_position
     @game.make_move(@position)
   end
 
-  def set_status
+  def draw_board
+    index = -1
+    @board.gsub("   ") do
+      index += 1
+      field = @game.board[index] ? @game.board[index] : " "
+      @position == index ? "(#{field})" : " #{field} "
+    end
+  end
+
+  def update_status
     if @game.winner
       @status = "'#{@game.winner}'" + STATUSES[:win]
     elsif @game.over?
@@ -62,17 +83,6 @@ BOARD
       @status = STATUSES[:start]
     else
       @status = @current_insult
-    end
-  end
-
-  private
-
-  def draw_board
-    index = -1
-    @board.gsub("   ") do
-      index += 1
-      field = @game.board[index] ? @game.board[index] : " "
-      @position == index ? "(#{field})" : " #{field} "
     end
   end
 end

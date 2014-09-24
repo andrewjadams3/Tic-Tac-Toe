@@ -8,7 +8,6 @@ Dispel::Screen.open do |screen|
   ai = Ai.new(game)
   view = View.new(game)
 
-  view.set_status
   screen.draw(view.draw_screen)
 
   Dispel::Keyboard.output do |key|
@@ -18,7 +17,7 @@ Dispel::Screen.open do |screen|
     when :right then view.move_cursor(1,0)
     when :left then view.move_cursor(-1,0)
     when :enter 
-      view.set_position
+      view.attempt_position
       ai.make_move if game.ai_turn?
     when "q" then break
     when "r"
@@ -27,7 +26,6 @@ Dispel::Screen.open do |screen|
       ai = Ai.new(game)
     end
 
-    view.set_status
     screen.draw(view.draw_screen)
   end
 end
