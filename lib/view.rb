@@ -13,13 +13,22 @@ class View
     "I usually see people like you passed-out on tavern floors."
   ]
 
+  STATUSES = {
+    start: "Let's play!",
+    draw: "It's a draw... Press 'R' to reset.",
+    winner: "'O' wins! Press 'R' to reset.",
+    bad_move: "Are you kidding me? You can't play there!"
+  }
+
+  INSTRUCTIONS = "Q = Quit  | Return = Play\nR = Reset | Arrow Keys = Move"
+
   BOARD = <<BOARD
 
- X | X | X 
+   |   |   
 -----------
- X | X | X 
+   |   |   
 -----------
- X | X | X 
+   |   |   
 
 BOARD
 
@@ -31,7 +40,7 @@ BOARD
   end
 
   def draw_screen
-    [draw_board, status_line, position_line, instructions].join("\n")
+    [draw_board, status_line, INSTRUCTIONS].join("\n")
   end
 
   def move(x,y)
@@ -45,7 +54,7 @@ BOARD
       @current_insult = INSULTS.sample
       true
     else
-      @current_insult = "Are you kidding me? You can't play there!"
+      @current_insult = STATUSES[:bad_move]
       false
     end
   end
@@ -54,28 +63,20 @@ BOARD
 
   def draw_board
     index = -1
-    @board.gsub(" X ") do
+    @board.gsub("   ") do
       index += 1
       field = @game.board[index] ? @game.board[index] : " "
       @position == index ? "(#{field})" : " #{field} "
     end
   end
 
-  def instructions
-    "Q = Quit  | Return = Play\nR = Reset | Arrow Keys = Move"
-  end
-
-  def position_line
-    "Position: #{@position + 1}"
-  end
-
   def status_line
     if @game.winner
-      "'#{@game.winner}' wins! Press 'R' to reset."
+      STATUSES[:winner]
     elsif @game.over?
-      "It's a draw... Press 'R' to reset."
+      STATUSES[:draw]
     elsif @game.number_of_moves == 0
-      "Let's play!"
+      STATUSES[:start]
     else
       @current_insult
     end
