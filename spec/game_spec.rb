@@ -55,11 +55,7 @@ describe Game do
   context 'determining a winner' do
     before(:all) do
       @winning_game = Game.new
-      @winning_game.make_move(0) #X
-      @winning_game.make_move(3) #O
-      @winning_game.make_move(1) #X
-      @winning_game.make_move(4) #O
-      @winning_game.make_move(2) #X
+      [0,3,1,4,2].each { |move| @winning_game.make_move(move) }
     end
 
     it 'should declare the correct winner' do
@@ -74,15 +70,7 @@ describe Game do
   context 'determining a draw' do
     before(:all) do
       @draw = Game.new
-      @draw.make_move(0) #X
-      @draw.make_move(1) #O
-      @draw.make_move(2) #X
-      @draw.make_move(4) #O
-      @draw.make_move(3) #X
-      @draw.make_move(6) #O
-      @draw.make_move(5) #X
-      @draw.make_move(8) #O
-      @draw.make_move(7) #X
+      [0,1,2,4,3,6,5,8,7].each { |move| @draw.make_move(move) }
     end
 
     it 'should not declare a winner' do
