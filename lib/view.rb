@@ -32,6 +32,8 @@ class View
 
 BOARD
 
+  attr_reader :status, :position
+
   def initialize(game)
     @game = game
     @position = 0
@@ -53,9 +55,9 @@ BOARD
   def attempt_position
     if @game.valid_position?(@position)
       set_position
-      @current_insult = INSULTS.sample
+      @status = INSULTS.sample
     else
-      @current_insult = STATUSES[:bad_move]
+      @status = STATUSES[:bad_move]
     end
   end
 
@@ -81,8 +83,6 @@ BOARD
       @status = STATUSES[:draw]
     elsif @game.number_of_moves == 0
       @status = STATUSES[:start]
-    else
-      @status = @current_insult
     end
   end
 end
