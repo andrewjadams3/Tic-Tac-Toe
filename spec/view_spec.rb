@@ -29,7 +29,7 @@ describe View do
   let(:game){ Game.new }
   let(:view){ View.new(game) }
 
-  context 'new game' do
+  context 'starting a new game' do
     it 'should display a starting status' do
       expect(view.draw_screen).to include STATUSES[:start]
     end
@@ -55,6 +55,26 @@ BOARD
     end
   end
 
+  context 'moving the cursor' do
+    before(:each) { view.move_cursor(1,0) }
+
+    it 'should update the cursor position' do
+      expect(view.position).to eq 1
+    end
+
+    it 'should display the cursor in the new position' do
+      expect(view.draw_screen).to include(board = <<BOARD
+   |( )|   
+-----------
+   |   |   
+-----------
+   |   |   
+
+BOARD
+        )
+    end
+  end
+
   context 'attempting a move' do
     before(:each) { view.attempt_position }
 
@@ -77,6 +97,18 @@ BOARD
 
 BOARD
         )
+    end
+  end
+
+  context 'winning a game' do
+    xit 'should display a winning status' do
+      expect(view.draw_screen).to include STATUSES[:win]
+    end
+  end
+
+  context 'drawing a game' do
+    xit 'should display a draw status' do
+      expect(view.draw_screen).to include STATUSES[:draw]
     end
   end
 end
