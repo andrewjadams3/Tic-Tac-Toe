@@ -16,7 +16,7 @@ class View
   STATUSES = {
     start: "Let's play!",
     draw: "It's a draw... Press 'R' to reset.",
-    winner: "'O' wins! Press 'R' to reset.",
+    win: " wins! Press 'R' to reset.",
     bad_move: "Are you kidding me? You can't play there!"
   }
 
@@ -40,22 +40,28 @@ BOARD
   end
 
   def draw_screen
-    [draw_board, status_line, INSTRUCTIONS].join("\n")
+    [draw_board, @status, INSTRUCTIONS].join("\n")
   end
 
-  def move(x,y)
+  def move_cursor(x,y)
     x = (@position + x) % 3
     y = ((@position / 3) + y) % 3
     @position = x + (y * 3)
   end
 
-  def set
-    if @game.make_move(@position)
-      @current_insult = INSULTS.sample
-      true
+  def set_position
+    @game.make_move(@position)
+  end
+
+  def set_status
+    if @game.winner
+      @status = "'#{@game.winner}'" + STATUSES[:win]
+    elsif @game.over?
+      @status = STATUSES[:draw]
+    elsif @game.number_of_moves == 0
+      @status = STATUSES[:start]
     else
-      @current_insult = STATUSES[:bad_move]
-      false
+      @status = @current_insult
     end
   end
 
@@ -67,18 +73,6 @@ BOARD
       index += 1
       field = @game.board[index] ? @game.board[index] : " "
       @position == index ? "(#{field})" : " #{field} "
-    end
-  end
-
-  def status_line
-    if @game.winner
-      STATUSES[:winner]
-    elsif @game.over?
-      STATUSES[:draw]
-    elsif @game.number_of_moves == 0
-      STATUSES[:start]
-    else
-      @current_insult
     end
   end
 end
