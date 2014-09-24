@@ -33,6 +33,10 @@ class Game
     !!@winner || empty_positions.empty?
   end
 
+  def ai_turn?
+    @current_turn == @ai_symbol
+  end
+
   def number_of_moves
     @board.size - @empty_positions.size
   end
