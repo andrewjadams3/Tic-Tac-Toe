@@ -34,4 +34,12 @@ class Board
   def [](position)
     @board_array[position]
   end
+
+  def initialize_copy(source)
+    board_array = @board_array.dup
+    empty_positions = @empty_positions.dup
+    super
+    @board_array = board_array
+    @empty_positions = empty_positions
+  end
 end
