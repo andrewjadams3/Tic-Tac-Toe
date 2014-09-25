@@ -1,6 +1,7 @@
 class Game
   attr_reader :ai_symbol, :player_symbol, 
-              :current_turn, :winner, :board
+              :winner, :board
+  attr_accessor :current_turn
 
   def initialize(board)
     @board = board
