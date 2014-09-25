@@ -38,7 +38,6 @@ BOARD
     @game = game
     @position = 0
     @status = update_status
-    @board = BOARD
   end
 
   def draw_screen
@@ -69,7 +68,7 @@ BOARD
 
   def draw_board
     index = -1
-    @board.gsub("   ") do
+    BOARD.gsub("   ") do
       index += 1
       field = @game.board[index] ? @game.board[index] : " "
       @position == index ? "(#{field})" : " #{field} "
