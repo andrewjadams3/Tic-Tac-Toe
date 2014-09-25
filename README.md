@@ -1,4 +1,4 @@
-Tic-Tac-Toe
+Tic-Tac-Toe [ ![Codeship Status for andrewjadams3/Tic-Tac-Toe](https://www.codeship.io/projects/47cf5790-26e8-0132-90b5-1a5e1ee00264/status)](https://www.codeship.io/projects/37577)
 ===========
 
 An unbeatable tic-tac-toe game in Ruby.
