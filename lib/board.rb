@@ -1,4 +1,6 @@
 class Board
+  attr_reader :empty_positions
+
   def initialize(board_array=nil)
     @board_array = board_array || Array.new(9)
     @empty_positions = (0..8).to_a
@@ -23,5 +25,13 @@ class Board
 
   def center_taken?
     !!@board_array[center]
+  end
+
+  def size
+    @board_array.size
+  end
+
+  def [](position)
+    @board_array[position]
   end
 end
