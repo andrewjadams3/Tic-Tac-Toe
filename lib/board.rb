@@ -1,18 +1,21 @@
 class Board
-  attr_reader :empty_positions
+  LINES  = [[0,1,2], [3,4,5], 
+            [6,7,8], [0,3,6], 
+            [1,4,7], [2,5,8], 
+            [0,4,8], [2,4,6]]
+
+  attr_reader :empty_positions, :winning_piece
 
   def initialize(board_array=nil)
     @board_array = board_array || Array.new(9)
     @empty_positions = (0..8).to_a
-  end
-
-  def empty?
-    empty_positions.size == 9
+    @winning_piece = nil
   end
 
   def place_piece(piece, position)
     @board_array[position] = piece
     @empty_positions.delete(position)
+    find_winning_piece
   end
 
   def random_corner
@@ -27,12 +30,29 @@ class Board
     !!@board_array[center]
   end
 
+  def empty?
+    empty_positions.size == 9
+  end
+
   def size
     @board_array.size
   end
 
   def [](position)
     @board_array[position]
+  end
+
+  private
+
+  def find_winning_piece
+    LINES.each do |line|
+      @winning_piece = @board_array[line[0]] if winning_line?(line)
+    end
+  end
+
+  def winning_line?(line)
+    values = line.map { |position| @board_array[position] }
+    values.uniq.size == 1 && !values.include?(nil)
   end
 
   def initialize_copy(source)
