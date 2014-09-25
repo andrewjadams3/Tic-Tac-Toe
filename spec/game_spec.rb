@@ -1,4 +1,5 @@
 require 'rspec'
+require_relative 'spec_helper'
 require_relative '../lib/game'
 require_relative '../lib/board'
 
@@ -48,39 +49,49 @@ describe Game do
     it 'should alternate between players' do
       expect(game.ai_turn?).to be true
     end
+
+    it 'should increase the number of moves' do
+      expect(game.number_of_moves).to eq 1
+    end
   end
 
-#   context 'determining a winner' do
-#     before(:all) do
-#       @winning_game = Game.new
-#       [0,3,1,4,2].each { |move| @winning_game.make_move(move) }
-#     end
+  context 'determining a winner' do
+    before(:all) do
+      winning_board = [['O', 'X', ' '],
+                       [' ', 'X', 'O'],
+                       [' ', 'X', ' ']]
+      board = Board.new(flatten_board(winning_board))
+      @winning_game = Game.new(board)
+    end
 
-#     it 'should declare the correct winner' do
-#       expect(@winning_game.winner).to eq 'X'
-#     end
+    it 'should declare the correct winner' do
+      expect(@winning_game.winner).to eq 'X'
+    end
 
-#     it 'should be over' do
-#       expect(@winning_game.over?).to be true
-#     end
-#   end
+    it 'should be over' do
+      expect(@winning_game.over?).to be true
+    end
+  end
 
-#   context 'determining a draw' do
-#     before(:all) do
-#       @draw = Game.new
-#       [0,1,2,4,3,6,5,8,7].each { |move| @draw.make_move(move) }
-#     end
+  context 'determining a draw' do
+    before(:all) do
+      draw_board = [['O', 'X', 'X'],
+                    ['X', 'O', 'O'],
+                    ['X', 'O', 'X']]
+      board = Board.new(flatten_board(draw_board))
+      @draw = Game.new(board)
+    end
 
-#     it 'should not declare a winner' do
-#       expect(@draw.winner).to eq nil
-#     end
+    it 'should not declare a winner' do
+      expect(@draw.winner).to eq nil
+    end
 
-#     it 'should be over' do
-#       expect(@draw.over?).to be true
-#     end
+    it 'should be over' do
+      expect(@draw.over?).to be true
+    end
 
-#     it 'should not have any remaining empty positions' do
-#       expect(@draw.empty_positions.empty?).to be true
-#     end
-#   end
+    it 'should not have any remaining available moves' do
+      expect(@draw.available_moves.empty?).to be true
+    end
+  end
 end
