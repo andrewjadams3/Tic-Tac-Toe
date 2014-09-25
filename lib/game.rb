@@ -9,8 +9,10 @@ class Game
   end
 
   def make_move(position)
-    @board.place_piece(@current_turn, position)
-    @current_turn = new_turn
+    if valid_move?(position)
+      @board.place_piece(@current_turn, position)
+      @current_turn = new_turn
+    end
   end
 
   def available_moves

@@ -13,9 +13,11 @@ class Board
   end
 
   def place_piece(piece, position)
-    @board_array[position] = piece
-    @empty_positions.delete(position)
-    find_winning_piece
+    if @board_array[position].nil?
+      @board_array[position] = piece
+      @empty_positions.delete(position)
+      find_winning_piece
+    end
   end
 
   def random_corner
