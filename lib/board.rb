@@ -8,14 +8,15 @@ class Board
 
   def initialize(board_array=nil)
     @board_array = board_array || Array.new(9)
-    @empty_positions = (0..8).to_a
     @winning_piece = nil
+    set_empty_positions
+    find_winning_piece
   end
 
   def place_piece(piece, position)
     if @board_array[position].nil?
       @board_array[position] = piece
-      @empty_positions.delete(position)
+      set_empty_positions
       find_winning_piece
     end
   end
@@ -55,6 +56,10 @@ class Board
   def winning_line?(line)
     values = line.map { |position| @board_array[position] }
     values.uniq.size == 1 && !values.include?(nil)
+  end
+
+  def set_empty_positions
+    @empty_positions = (0..8).select { |position| @board_array[position].nil? }
   end
 
   def initialize_copy(source)
