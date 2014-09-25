@@ -16,6 +16,24 @@ describe Board do
     end
   end
 
+  context 'placing a piece' do
+    it 'should place a piece in an empty position' do
+      board.place_piece('O', 1)
+      expect(board[1]).to eq 'O'
+    end
+
+    it 'should not place a piece in a taken position' do
+      board.place_piece('O', 1)
+      board.place_piece('X', 1)
+      expect(board[1]).to eq 'O'
+    end
+
+    it 'should update empty positions' do
+      board.place_piece('O', 1)
+      expect(board.empty_positions).to_not include 1
+    end
+  end
+
   context 'extra board methods' do
     it 'should return a random corner' do
       expect(CORNERS).to include board.random_corner
@@ -42,7 +60,7 @@ describe Board do
     end
   end
 
-  context 'premade board' do
+  context 'determining a winner' do
     before(:all) do
       winning_board = [['O', 'X', ' '],
                        [' ', 'X', 'O'],
@@ -50,11 +68,11 @@ describe Board do
       @winning_board = Board.new(flatten_board(winning_board))
     end
 
-    it 'should initialize with a winning piece' do
+    it 'should indicate a winning piece' do
       expect(@winning_board.winning_piece).to eq 'X'
     end
 
-    it 'should initialize with the correct empty positions' do
+    it 'should indicate the correct empty positions' do
       expect(@winning_board.empty_positions).to eq [2,3,6,8]
     end
   end
