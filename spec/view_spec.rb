@@ -57,14 +57,15 @@ BOARD
   end
 
   context 'moving the cursor' do
-    before(:each) { view.move_cursor(1,0) }
+    describe 'moving the cursor right' do
+      before(:each) { view.move_cursor(1,0) }
 
-    it 'should update the cursor position' do
-      expect(view.position).to eq 1
-    end
+      it 'should update the cursor position' do
+        expect(view.position).to eq 1
+      end
 
-    it 'should display the cursor in the new position' do
-      expect(view.draw_screen).to include(board = <<BOARD
+      it 'should display the cursor in the new position' do
+        expect(view.draw_screen).to include(board = <<BOARD
    |( )|   
 -----------
    |   |   
@@ -72,7 +73,68 @@ BOARD
    |   |   
 
 BOARD
-        )
+          )
+      end
+    end
+
+    describe 'moving the cursor left' do
+      before(:each) { view.move_cursor(-1,0) }
+
+      it 'should update the cursor position' do
+        expect(view.position).to eq 2
+      end
+
+      it 'should display the cursor in the new position' do
+        expect(view.draw_screen).to include(board = <<BOARD
+   |   |( )
+-----------
+   |   |   
+-----------
+   |   |   
+
+BOARD
+          )
+      end
+    end
+
+    describe 'moving the cursor up' do
+      before(:each) { view.move_cursor(0,-1) }
+
+      it 'should update the cursor position' do
+        expect(view.position).to eq 6
+      end
+
+      it 'should display the cursor in the new position' do
+        expect(view.draw_screen).to include(board = <<BOARD
+   |   |   
+-----------
+   |   |   
+-----------
+( )|   |   
+
+BOARD
+          )
+      end
+    end
+
+    describe 'moving the cursor down' do
+      before(:each) { view.move_cursor(0,1) }
+
+      it 'should update the cursor position' do
+        expect(view.position).to eq 3
+      end
+
+      it 'should display the cursor in the new position' do
+        expect(view.draw_screen).to include(board = <<BOARD
+   |   |   
+-----------
+( )|   |   
+-----------
+   |   |   
+
+BOARD
+          )
+      end
     end
   end
 
