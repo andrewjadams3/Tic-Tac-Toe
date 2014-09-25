@@ -52,7 +52,7 @@ BOARD
   end
 
   def attempt_position
-    if @game.valid_position?(@position)
+    if @game.valid_move?(@position)
       set_position
       @status = INSULTS.sample
     else

@@ -1,6 +1,7 @@
 class Ai
   def initialize(game)
     @game = game
+    @board = game.board
     @ai_symbol = game.ai_symbol
     @player_symbol = game.player_symbol
   end
@@ -13,9 +14,8 @@ class Ai
   private
 
   def best_move
-    return @game.random_corner if @game.empty?
     if @game.number_of_moves == 1
-      @game.center_taken? ? (return @game.random_corner) : (return @game.center)
+      @board.center_taken? ? (return @board.random_corner) : (return @board.center)
     else
       predict_move(@game)
       @best_choice
@@ -26,7 +26,7 @@ class Ai
     return score(game) if game.over?
     moves = Hash.new
 
-    game.empty_positions.each do |position|
+    game.available_moves.each do |position|
       test_game = game.dup
       test_game.make_move(position)
       moves[position] = predict_move(test_game)
