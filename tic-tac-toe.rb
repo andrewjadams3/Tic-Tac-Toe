@@ -20,7 +20,7 @@ Dispel::Screen.open do |screen|
     when :left then view.move_cursor(-1,0)
     when :enter 
       view.attempt_position
-      ai.make_move if game.ai_turn?
+      ai.make_move if game.ai_turn? && !game.over?
     when "q" then break
     when "r"
       board = Board.new
