@@ -1,4 +1,5 @@
 require 'rspec'
+require_relative '../lib/board'
 require_relative '../lib/game'
 require_relative '../lib/view'
 
@@ -26,7 +27,7 @@ describe View do
 
   INSTRUCTIONS = "Q = Quit  | Return = Play\nR = Reset | Arrow Keys = Move"
 
-  let(:game){ Game.new }
+  let(:game){ Game.new(Board.new) }
   let(:view){ View.new(game) }
 
   context 'starting a new game' do
