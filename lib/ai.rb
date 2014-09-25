@@ -7,19 +7,20 @@ class Ai
   end
 
   def make_move
-    return if @game.over?
     @game.make_move(best_move)
   end
 
   private
 
   def best_move
+    chosen_move = nil
     if @game.number_of_moves == 1
-      @board.center_taken? ? (return @board.random_corner) : (return @board.center)
+      chosen_move = @board.center_taken? ? @board.random_corner : @board.center
     else
       predict_move(@game)
-      @best_choice
+      chosen_move = @best_choice
     end
+    chosen_move
   end
 
   def predict_move(game)
@@ -43,13 +44,17 @@ class Ai
     end
   end
 
+  WIN  =  1
+  LOSE = -1
+  TIE  =  0
+
   def score(game)
     if game.winner == @ai_symbol
-      1
+      WIN
     elsif game.winner == @player_symbol
-      -1
+      LOSE
     else
-      0
+      TIE
     end 
   end
 end
