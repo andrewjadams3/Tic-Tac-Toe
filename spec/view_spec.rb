@@ -102,13 +102,25 @@ BOARD
   end
 
   context 'winning a game' do
-    xit 'should display a winning status' do
+    it 'should display a winning status' do
+      win_board = [['O', 'X', 'X'],
+                   ['X', 'O', ' '],
+                   [' ', ' ', 'O']]
+      board = Board.new(flatten_board(win_board))
+      game = Game.new(board)
+      view = View.new(game)
       expect(view.draw_screen).to include STATUSES[:win]
     end
   end
 
   context 'drawing a game' do
-    xit 'should display a draw status' do
+    it 'should display a draw status' do
+      draw_board = [['O', 'X', 'X'],
+                    ['X', 'O', 'O'],
+                    ['X', 'O', 'X']]
+      board = Board.new(flatten_board(draw_board))
+      game = Game.new(board)
+      view = View.new(game)
       expect(view.draw_screen).to include STATUSES[:draw]
     end
   end
