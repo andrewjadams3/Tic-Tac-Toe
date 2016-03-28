@@ -17,5 +17,4 @@ Use arrow keys to move, press 'Return' to place a piece. Good luck!
 ##Author
 
 Andrew Adams  
-http://andrewada.ms  
-andrewjadams3@gmail.com
+http://andrewada.ms
